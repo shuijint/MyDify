@@ -14,4 +14,4 @@ class PingResponse(BaseModel):
 )
 def ping() -> PingResponse:
     """Health check endpoint for connection testing."""
-    return PingResponse(result="pong")
+    return PingResponse(result="hello my-lfy dify")

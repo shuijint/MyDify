@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
   const isTest = mode === 'test'
   const isStorybook = process.env.STORYBOOK === 'true'
     || process.argv.some(arg => arg.toLowerCase().includes('storybook'))
+  const isLightDev = process.env.DIFY_LIGHT_DEV === '1'
 
   return {
     plugins: isTest
@@ -37,14 +38,18 @@ export default defineConfig(({ mode }) => {
             react(),
           ]
         : [
-            Inspect(),
-            createCodeInspectorPlugin({
-              injectTarget: rootClientInjectTarget,
-            }),
-            createForceInspectorClientInjectionPlugin({
-              injectTarget: rootClientInjectTarget,
-              projectRoot,
-            }),
+            ...(!isLightDev
+              ? [
+                  Inspect(),
+                  createCodeInspectorPlugin({
+                    injectTarget: rootClientInjectTarget,
+                  }),
+                  createForceInspectorClientInjectionPlugin({
+                    injectTarget: rootClientInjectTarget,
+                    projectRoot,
+                  }),
+                ]
+              : []),
             react(),
             vinext({ react: false }),
             customI18nHmrPlugin({ injectTarget: rootClientInjectTarget }),

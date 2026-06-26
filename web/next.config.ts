@@ -7,6 +7,7 @@ const isDev = process.env.NODE_ENV === 'development'
 const withMDX = createMDX()
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ['127.0.0.1'],
   basePath: env.NEXT_PUBLIC_BASE_PATH,
   transpilePackages: ['@t3-oss/env-core', '@t3-oss/env-nextjs', 'echarts', 'zrender'],
   turbopack: {
